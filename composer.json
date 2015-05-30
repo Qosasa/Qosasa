@@ -1,0 +1,15 @@
+{
+	"name": "Qosasa/Qosasa",
+	"description": "Qosasa the snippet management tool",
+	"keywords": ["snippet", "qosasa"],
+	"license": "MIT",
+	"type": "project",
+	"require": {
+	},
+	"autoload": {
+		"autoload": {
+        "psr-4": {
+            "Qosasa\\": "src/"
+        }
+    }
+}

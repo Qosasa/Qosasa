@@ -7,7 +7,6 @@
 	"require": {
 	},
 	"autoload": {
-		"autoload": {
         "psr-4": {
             "Qosasa\\": "src/"
         }

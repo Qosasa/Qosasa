@@ -4,6 +4,13 @@
 class Format {
 
     /**
+     * Parametre name
+     * 
+     * @var string
+     */
+    public $name;
+
+    /**
      * One of the types: array, object, string, boolean, number
      * 
      * @var string

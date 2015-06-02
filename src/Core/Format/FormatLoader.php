@@ -32,7 +32,7 @@ class FormatLoader {
         $providerName = $this->snippet->getProvider();
 
         // Resolve provider
-        $provider = $this->resolveProvider($providerName, $file);
+        $provider = $this->resolveFormatProvider($providerName, $file);
 
         // Get format from provider
         $format = $provider->getFormat();
@@ -50,7 +50,7 @@ class FormatLoader {
      * @param  \League\Flysystem\File  $file
      * @return FormatProviderInterface
      */
-    public function resolveProvider($providerName, $file)
+    public function resolveFormatProvider($providerName, $file)
     {
         switch ($providerName) {
             case 'json':

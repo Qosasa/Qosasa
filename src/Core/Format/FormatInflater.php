@@ -8,6 +8,7 @@ class FormatInflater {
     /**
      * Inflate the format
      *
+     * @param  stdClass  $format
      * @return Format
      */
     public function inflate($format)
@@ -18,6 +19,7 @@ class FormatInflater {
     /**
      * Inflate the format
      *
+     * @param  stdClass  $obj
      * @return Format
      */
     public function fillFirstLevel($obj)
@@ -28,6 +30,8 @@ class FormatInflater {
     /**
      * Fill Format class
      *
+     * @param  stdClass  $obj
+     * @param  boolean  $firstLevel
      * @return Format
      */
     public function fill($obj, $firstLevel=false)
@@ -42,25 +46,40 @@ class FormatInflater {
     /**
      * Fill Format class with string
      *
+     * @param  string  $string
+     * @param  boolean  $firstLevel
      * @return Format
      */
     public function fillString($string, $firstLevel=false)
     {
-        list($name, $type) = $this->parseName($string);
+        list($name, $type, $isArray) = $this->parseName($string);
         
         $format = new Format;
         $format->name = $name;
-        $format->type = $type;
-
-        if ($firstLevel)
-            $format->separator = ($type === 'object') ? ':':',';
         
+        if ($isArray) {
+            $format->type = 'array';
+            $subFormat = new Format;
+            $subFormat->type = $type ?: 'string';            
+            $format->format = $subFormat;
+        } else $format->type = 'string';
+
+        if ($firstLevel) {
+            if ($format->type === 'object')
+                $format->separator = ':';
+            elseif ($format->type === 'array') {
+                $format->separator = ',';
+            }
+        }
+
         return $format;
     }
 
     /**
      * Fill Format class with object
      *
+     * @param  stdClass  $obj
+     * @param  boolean  $firstLevel
      * @return Format
      */
     public function fillObject($obj, $firstLevel=false)
@@ -117,6 +136,7 @@ class FormatInflater {
 
     /**
      * Extract attribute name and type from format
+     *
      * @param  string  $name
      * @return Format
      */
@@ -126,9 +146,10 @@ class FormatInflater {
         preg_match($pattern, $name, $matches);
 
         $attr = $matches['attr'];
-        $type = empty($matches['type']) ? 'string' : $matches['type'];
-
-        return [$attr, $type];
+        $type = empty($matches['type']) ? null : $matches['type'];
+        $isArray = @$matches[2][0] === '[';
+        
+        return [$attr, $type, $isArray];
     }
 
 }

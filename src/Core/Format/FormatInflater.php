@@ -112,7 +112,7 @@ class FormatInflater {
             }
         }
 
-        // Set flags
+        // Set flags if set
         if (isset($obj->flags)) {
             $format->flags = $obj->flags;
         }
@@ -137,7 +137,7 @@ class FormatInflater {
      * Extract attribute name and type from format
      *
      * @param  string  $name
-     * @return Format
+     * @return array
      */
     public function parseName($name)
     {

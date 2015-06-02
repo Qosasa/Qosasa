@@ -9,9 +9,24 @@ use Qosasa\Core\Snippet;
 class FormatLoader {
 
     /**
+     * The snippet instance
+     * 
+     * @var \Qosasa\Core\Snippet
+     */
+    protected $snippet;
+
+    /**
+     * The FormatInflater instance
+     * 
+     * @var \Qosasa\Core\Format\FormatInflater
+     */
+    protected $formatInflater;
+
+    /**
      * Create a new format loader
      *
      * @param  \Qosasa\Core\Snippet  $snippet
+     * @param  \Qosasa\Core\Format\FormatInflater  $formatInflater
      * @return void
      */
     public function __construct(Snippet $snippet, FormatInflater $formatInflater)
@@ -44,7 +59,7 @@ class FormatLoader {
     }
 
     /**
-     * Return provider
+     * Return format provider
      *
      * @param  string  $providerName
      * @param  \League\Flysystem\File  $file

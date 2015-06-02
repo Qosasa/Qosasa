@@ -112,7 +112,7 @@ class FormatInflater {
             }
         }
 
-        // Set flags, default to empty array
+        // Set flags
         if (isset($obj->flags)) {
             $format->flags = $obj->flags;
         }

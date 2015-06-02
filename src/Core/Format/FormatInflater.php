@@ -13,11 +13,11 @@ class FormatInflater {
      */
     public function inflate($format)
     {
-        return $this->fill($format, true);
+        return $this->fillFirstLevel($format);
     }
 
     /**
-     * Inflate the format
+     * Fill the first level of format
      *
      * @param  stdClass  $obj
      * @return Format

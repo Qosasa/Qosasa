@@ -29,7 +29,7 @@ class FormatLoader {
     {
         // Get info from snippet
         $file = $this->snippet->getFormatFile();
-        $providerName = $this->snippet->getProvider();
+        $providerName = $this->snippet->getFormatProviderName();
 
         // Resolve provider
         $provider = $this->resolveFormatProvider($providerName, $file);

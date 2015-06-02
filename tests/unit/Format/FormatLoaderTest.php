@@ -34,7 +34,7 @@ class FormatLoaderTest extends PHPUnit_Framework_TestCase {
 
         $snippetMock = m::mock('Qosasa\Core\Snippet');
         $snippetMock->shouldReceive('getFormatFile')->once()->andReturn($fileMock);
-        $snippetMock->shouldReceive('getProvider')->once()->andReturn($providerName);
+        $snippetMock->shouldReceive('getFormatProviderName')->once()->andReturn($providerName);
 
         $formatInflaterMock = m::mock('Qosasa\Core\Format\FormatInflater');
         $formatInflaterMock->shouldReceive('inflate')->once()->andReturnUsing(function ($arg) {

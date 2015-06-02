@@ -44,7 +44,7 @@ class FormatLoaderIntegrationTest extends PHPUnit_Framework_TestCase {
 
         $snippetMock = m::mock('Qosasa\Core\Snippet');
         $snippetMock->shouldReceive('getFormatFile')->once()->andReturn($fileMock);
-        $snippetMock->shouldReceive('getProvider')->once()->andReturn('json');
+        $snippetMock->shouldReceive('getFormatProviderName')->once()->andReturn('json');
 
         $formatInflater = new FormatInflater;
         

@@ -25,8 +25,8 @@ class FormatLoader {
     /**
      * Create a new format loader
      *
-     * @param  \Qosasa\Core\Snippet  $snippet
-     * @param  \Qosasa\Core\Format\FormatInflater  $formatInflater
+     * @param  \Qosasa\Core\Snippet $snippet snippet instance
+     * @param  \Qosasa\Core\Format\FormatInflater $formatInflater FormatInflater instance
      * @return void
      */
     public function __construct(Snippet $snippet, FormatInflater $formatInflater)
@@ -59,10 +59,10 @@ class FormatLoader {
     }
 
     /**
-     * Return format provider
+     * Return format provider instance
      *
-     * @param  string  $providerName
-     * @param  \League\Flysystem\File  $file
+     * @param  string $providerName provider name
+     * @param  \League\Flysystem\File $file format file instance
      * @return FormatProviderInterface
      */
     public function resolveFormatProvider($providerName, $file)

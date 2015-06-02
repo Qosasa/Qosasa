@@ -9,9 +9,16 @@ use League\Flysystem\FileNotFoundException;
 class JSONFormatProvider implements FormatProviderInterface {
 
     /**
+     * The format file instance
+     * 
+     * @var \League\Flysystem\File
+     */
+    protected $file;
+
+    /**
      * Create a format provider for JSON files
      *
-     * @param  \League\Flysystem\File  $file
+     * @param  \League\Flysystem\File $file the format file
      * @return void
      */
     public function __construct(File $file)
@@ -26,7 +33,6 @@ class JSONFormatProvider implements FormatProviderInterface {
      */
     public function getFormat()
     {
-        
         try {
             $content = $this->file->read();
         } catch(FileNotFoundException $e) {

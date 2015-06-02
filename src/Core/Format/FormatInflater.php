@@ -8,7 +8,7 @@ class FormatInflater {
     /**
      * Inflate the format
      *
-     * @param  stdClass  $format
+     * @param  stdClass $format format object
      * @return Format
      */
     public function inflate($format)
@@ -19,7 +19,7 @@ class FormatInflater {
     /**
      * Fill the first level of format
      *
-     * @param  stdClass  $obj
+     * @param  stdClass $obj format object
      * @return Format
      */
     public function fillFirstLevel($obj)
@@ -30,11 +30,11 @@ class FormatInflater {
     /**
      * Fill Format class
      *
-     * @param  stdClass  $obj
-     * @param  boolean  $firstLevel
+     * @param  stdClass $obj format object
+     * @param  boolean $firstLevel is first level or not
      * @return Format
      */
-    public function fill($obj, $firstLevel=false)
+    public function fill($obj, $firstLevel = false)
     {
         if (is_string($obj)) {
             return $this->fillString($obj, $firstLevel);
@@ -46,11 +46,11 @@ class FormatInflater {
     /**
      * Fill Format class with string
      *
-     * @param  string  $string
-     * @param  boolean  $firstLevel
+     * @param  string $string string format
+     * @param  boolean $firstLevel is first level or not
      * @return Format
      */
-    public function fillString($string, $firstLevel=false)
+    public function fillString($string, $firstLevel = false)
     {
         list($name, $type, $isArray) = $this->parseName($string);
         
@@ -58,16 +58,18 @@ class FormatInflater {
         $format->name = $name;
         
         if ($isArray) {
-            $format->type = 'array';
-            $subFormat = new Format;
+            $format->type    = 'array';
+            $subFormat       = new Format;
             $subFormat->type = $type ?: 'string';            
-            $format->format = $subFormat;
-        } else $format->type = 'string';
+            $format->format  = $subFormat;
+        } else {
+            $format->type = 'string';
+        }
 
         if ($firstLevel) {
-            if ($format->type === 'object')
+            if ($format->type === 'object') {
                 $format->separator = ':';
-            elseif ($format->type === 'array') {
+            } elseif ($format->type === 'array') {
                 $format->separator = ',';
             }
         }
@@ -78,8 +80,8 @@ class FormatInflater {
     /**
      * Fill Format class with object
      *
-     * @param  stdClass  $obj
-     * @param  boolean  $firstLevel
+     * @param  stdClass $obj format object
+     * @param  boolean $firstLevel is first level or not
      * @return Format
      */
     public function fillObject($obj, $firstLevel=false)
@@ -122,11 +124,15 @@ class FormatInflater {
             if ($firstLevel) {
                 if (is_array($obj->fields)) {
                     $format->format = array_map([$this, 'fillFirstLevel'], $obj->fields);
-                } else $format->format = $this->fill($obj->fields, true);
+                } else {
+                    $format->format = $this->fill($obj->fields, true);
+                }
             } else {
                 if (is_array($obj->fields)) {
                     $format->format = array_map([$this, 'fill'], $obj->fields);
-                } else $format->format = $this->fill($obj->fields);
+                } else {
+                    $format->format = $this->fill($obj->fields);
+                }
             }
         }
 
@@ -136,7 +142,7 @@ class FormatInflater {
     /**
      * Extract attribute name and type from format
      *
-     * @param  string  $name
+     * @param  string $name format string
      * @return array
      */
     public function parseName($name)
@@ -146,7 +152,7 @@ class FormatInflater {
 
         $attr = $matches['attr'];
         $type = empty($matches['type']) ? null : $matches['type'];
-        $isArray = @$matches[2][0] === '[';
+        $isArray = (@$matches[2][0] === '[');
         
         return [$attr, $type, $isArray];
     }

@@ -46,8 +46,8 @@ class FormatInflaterTest extends PHPUnit_Framework_TestCase {
     {
         $formatInflater = new FormatInflater;
         $obj = (object) [
-            "name" => "isStatic",
-            "type" => "boolean",
+            "name"    => "isStatic",
+            "type"    => "boolean",
             "default" => false
         ];
         $format = $formatInflater->fillObject($obj, true);

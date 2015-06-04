@@ -108,7 +108,7 @@ class ArgumentsParserTest extends PHPUnit_Framework_TestCase {
             'age' => 25,
             'admin' => false,
             'baaka' => true
-            ], $data);
+        ], $data);
 
         $data = $parser->parseToken('amine:25:!admin:false', $objectFormat);
         $this->assertEquals([
@@ -116,7 +116,7 @@ class ArgumentsParserTest extends PHPUnit_Framework_TestCase {
             'age' => 25,
             'admin' => false,
             'baaka' => false
-            ], $data);
+        ], $data);
 
     }
 
@@ -244,7 +244,7 @@ class ArgumentsParserTest extends PHPUnit_Framework_TestCase {
                 'compact' => true,
                 'h'       => false
             ]
-            ], $data);
+        ], $data);
         
         $data = $parser->parse('Person:name.string,count.int.static,friends.vector< Person* >');
         $this->assertEquals([
@@ -275,7 +275,7 @@ class ArgumentsParserTest extends PHPUnit_Framework_TestCase {
                 'compact' => false,
                 'h'       => false
             ]
-            ], $data);
+        ], $data);
 
     }
 
@@ -311,7 +311,7 @@ class ArgumentsParserTest extends PHPUnit_Framework_TestCase {
                 'bar' => false,
                 'baz' => true
             ]
-            ], $data);
+        ], $data);
         
         $data = $parser->parse('--my awesome string --bar');
         $this->assertEquals([
@@ -320,7 +320,7 @@ class ArgumentsParserTest extends PHPUnit_Framework_TestCase {
                 'bar' => true,
                 'baz' => false
             ]
-            ], $data);
+        ], $data);
         
     }
 

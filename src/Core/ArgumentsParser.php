@@ -8,14 +8,14 @@ class ArgumentsParser {
     /**
      * The format to use to parse arguments.
      * 
-     * @var Format
+     * @var Qosasa\Core\Format
      */
     protected $format;
 
     /**
      * Create an arguments parser instance.
      *  
-     * @param   Format $format The format to use when parsing arguments
+     * @param   Qosasa\Core\Format $format
      * @return  void
      */
     public function __construct(Format $format)
@@ -26,9 +26,9 @@ class ArgumentsParser {
     /**
      * Parses arguments using the format and returns the corresponding data.
      * 
-     * @param  string $args The arguments following the syntax: tokens [--flag ...]
-     * @return array  The data to pass to the template
-     * @throws ArgumentsParserException if arguments contain an unknown flag
+     * @param  string $args
+     * @return array
+     * @throws Qosasa\Core\Exceptions\ArgumentsParserException if arguments contain an unknown flag
      */
     public function parse($args)
     {
@@ -42,6 +42,7 @@ class ArgumentsParser {
         }
         $tokens = $args;
         // Retrieve flags from the arguments
+        // arguments: tokens [--flag ...]
         if( count($this->format->flags) > 0 ) {
             $args = explode(' ', $args);
             $i = count($args) - 1;
@@ -69,9 +70,9 @@ class ArgumentsParser {
      * Parses the token using the given format.
      * 
      * @param  string $token 
-     * @param  Format $format 
-     * @return mixed  the corresponding data
-     * @throws ArgumentsParserException if the type of $format is unknown
+     * @param  Qosasa\Core\Format $format 
+     * @return mixed 
+     * @throws Qosasa\Core\Exceptions\ArgumentsParserException if the type of $format is unknown
      */
     public function parseToken($token, Format $format){
         switch($format->type) {
@@ -93,9 +94,9 @@ class ArgumentsParser {
     /**
      * Parses the token as a number.
      * 
-     * @param  string     $token 
-     * @return int|double the numeric value of the token
-     * @throws ArgumentsParserException if the token is not numeric
+     * @param  string $token 
+     * @return int|double 
+     * @throws Qosasa\Core\Exceptions\ArgumentsParserException if the token is not numeric
      */
     protected function parseNumber($token)
     {
@@ -106,12 +107,11 @@ class ArgumentsParser {
     }
 
     /**
-     * Parses the token as a boolean.
+     * Parses the token as a boolean. Returns null if token does not have a valid boolean value.
      * 
      * @param  string    $token
-     * @param  string    $name the name of the boolean field
-     * @return bool|null the boolean value of the token 
-     *                   or null if token does not have a valid boolean value.
+     * @param  string    $name
+     * @return bool|null
      */
     protected function parseBoolean($token, $name)
     {
@@ -129,7 +129,7 @@ class ArgumentsParser {
      * 
      * @param  string $token
      * @param  string $separator
-     * @param  Format $format
+     * @param  Qosasa\Core\Format $format
      * @return array 
      */
     protected function parseArray($token, $separator, Format $format)
@@ -147,9 +147,9 @@ class ArgumentsParser {
      * 
      * @param  string $token
      * @param  string $separator 
-     * @param  array  $fields    array of Format specifying the format of every field of the object
+     * @param  array  $fields
      * @return array
-     * @throws ArgumentsParserException if a requied field is not present
+     * @throws Qosasa\Core\Exceptions\ArgumentsParserException if a requied field is not present
      */
     protected function parseObject($token, $separator, $fields)
     {

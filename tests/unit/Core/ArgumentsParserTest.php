@@ -4,6 +4,7 @@ use Qosasa\Core\ArgumentsParser;
 use Qosasa\Core\Format;
 use Qosasa\Core\Exceptions\ArgumentsParserException;
 
+
 class ArgumentsParserTest extends PHPUnit_Framework_TestCase {
     
     protected function makeFormat($attrs)

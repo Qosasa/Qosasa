@@ -3,6 +3,7 @@
 use Qosasa\Core\Format;
 use Qosasa\Core\Exceptions\ArgumentsParserException;
 
+
 class ArgumentsParser {
 
     /**
@@ -37,19 +38,19 @@ class ArgumentsParser {
             'flags' => []
         ];
         // Initializing flags
-        foreach( $this->format->flags as $flag ) {
+        foreach($this->format->flags as $flag) {
             $result['flags'][$flag] = false;
         }
         $tokens = $args;
         // Retrieve flags from the arguments
         // arguments: tokens [--flag ...]
-        if( count($this->format->flags) > 0 ) {
+        if(count($this->format->flags) > 0) {
             $args = explode(' ', $args);
             $i = count($args) - 1;
-            while( $i > 0 ) {
-                if( '--' == substr($args[$i], 0, 2) ) {
+            while($i > 0) {
+                if('--' == substr($args[$i], 0, 2)) {
                     $flag = substr($args[$i], 2);
-                    if( ! in_array($flag, $this->format->flags) ) {
+                    if(! in_array($flag, $this->format->flags)) {
                         throw new ArgumentsParserException("Unknown flag '{$flag}'");
                     }
                     $result['flags'][$flag] = true;
@@ -100,7 +101,7 @@ class ArgumentsParser {
      */
     protected function parseNumber($token)
     {
-        if( ! is_numeric($token) ) {
+        if(! is_numeric($token)) {
             throw new ArgumentsParserException("Unable to parse '{$token}' as number");
         }
         return $token + 0;
@@ -115,9 +116,9 @@ class ArgumentsParser {
      */
     protected function parseBoolean($token, $name)
     {
-        if( in_array($token, ['yes', 'true', '1', $name]) ) {
+        if(in_array($token, ['yes', 'true', '1', $name])) {
             return true;
-        } else if( in_array($token, ['no', 'false', '0', "!{$name}"]) ){
+        } else if(in_array($token, ['no', 'false', '0', "!{$name}"])){
             return false;
         } else {
             return null;
@@ -160,7 +161,7 @@ class ArgumentsParser {
         $requiredFieldsIndexes = [];
         $optionalFieldsIndexes = [];
         foreach($fields as $index => $format) {
-            if( $format->default === null ) {
+            if($format->default === null) {
                 array_push($requiredFieldsIndexes, $index);
             } else {
                 array_push($optionalFieldsIndexes, $index);
@@ -168,7 +169,7 @@ class ArgumentsParser {
         }
         $requiredFieldsIndexesNumber = count($requiredFieldsIndexes);
 
-        if( $tokensNumber < $requiredFieldsIndexesNumber ) {
+        if($tokensNumber < $requiredFieldsIndexesNumber) {
             $requiredFields = array_map(function($index) use ($fields) {
                     return $fields[$index]->name;
                 }, $requiredFieldsIndexes);
@@ -185,13 +186,13 @@ class ArgumentsParser {
         sort($givenFieldsIndexes);
 
         // Fill the given fields
-        for( $i = 0; $i < $tokensNumber; $i ++) {
+        for($i = 0; $i < $tokensNumber; $i ++) {
             $fieldFormat = $fields[$givenFieldsIndexes[$i]];
             $result[$fieldFormat->name] = $this->parseToken($tokens[$i], $fieldFormat);
         }
 
         // Fill other fields with default values
-        foreach( $notPresentFieldsIndexes as $index ) {
+        foreach($notPresentFieldsIndexes as $index) {
             $fieldFormat = $fields[$index];
             $result[$fieldFormat->name] = $fieldFormat->default;
         }

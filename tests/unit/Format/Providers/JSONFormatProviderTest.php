@@ -38,6 +38,7 @@ class JSONFormatProviderTest extends PHPUnit_Framework_TestCase {
     {
         $fileMock = m::mock('League\Flysystem\File');
         $fileMock->shouldReceive('read')->once()->andReturn('data: 11}');
+        $fileMock->shouldReceive('getPath')->once()->andReturn('path/format.json');
         $formatProvider = new JSONFormatProvider($fileMock);
         $format = $formatProvider->getFormat();
     }

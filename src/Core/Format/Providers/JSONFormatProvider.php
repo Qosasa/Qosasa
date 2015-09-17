@@ -3,7 +3,8 @@
 use Qosasa\Core\Exceptions\FormatProviderException;
 use Qosasa\Core\Format\FormatProviderInterface;
 use League\Flysystem\File;
-use League\Flysystem\FileNotFoundException;
+use Qosasa\Core\IO\JSONReadWrite;
+use Qosasa\Core\Exceptions\JSONReadWriteException;
 
 
 class JSONFormatProvider implements FormatProviderInterface {
@@ -15,7 +16,7 @@ class JSONFormatProvider implements FormatProviderInterface {
      */
     protected $file;
 
-    /**
+     /**
      * Create a format provider for JSON files
      *
      * @param  \League\Flysystem\File $file the format file
@@ -30,19 +31,14 @@ class JSONFormatProvider implements FormatProviderInterface {
      * Return format object
      *
      * @return object
+     * @throws Qosasa\Core\Exceptions\FormatProviderException
      */
     public function getFormat()
     {
         try {
-            $content = $this->file->read();
-        } catch(FileNotFoundException $e) {
-            throw new FormatProviderException("JSON file not found at: ".$this->file->getPath());
-        }
-
-        $json = json_decode($content);
-        
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new FormatProviderException("Error parsing JSON file");
+            $json = JSONReadWrite::read($this->file);        
+        } catch(JSONReadWriteException $e){
+            throw new FormatProviderException($e->getMessage());
         }
 
         return $json;

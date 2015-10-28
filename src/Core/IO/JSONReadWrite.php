@@ -14,7 +14,8 @@ class JSONReadWrite {
 	 * @return object
 	 * @throws Qosasa\Core\Exceptions\JSONReadWriteException
 	 */
-	public static function read(File $file){
+	public static function read(File $file)
+	{
 		try {
 		    $content = $file->read();
 		} catch(\Exception $e) {
@@ -38,10 +39,13 @@ class JSONReadWrite {
 	 * @return void
 	 * @throws Qosasa\Core\Exceptions\JSONReadWriteException
 	 */
-	public static function write($data, File $file){
+	public static function write($data, File $file)
+	{
 		$json = json_encode($data);
-		if($json === false)
+
+		if ($json === false)
 			throw new JSONReadWriteException("Cannot encode the data to JSON");
+
 		$file->put($json);
 	}
 

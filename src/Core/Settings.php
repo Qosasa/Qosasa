@@ -77,11 +77,12 @@ class Settings {
 			'aliases' => new \stdClass
 		];
 
-		if($this->data == null)
+		if ($this->data === null) {
 			$this->data = new \stdClass;
+		}
 
 		foreach ($defaultData as $key => $value) {
-			if(! isset($this->data->$key)) {
+			if (! isset($this->data->$key)) {
 				$this->data->$key = $value;
 			}
 		}
@@ -94,7 +95,8 @@ class Settings {
 	 * @param mixed $value
 	 * @return void
 	 */
-	public function set($name, $value){
+	public function set($name, $value)
+	{
 		$this->data->$name = $value;
 	}
 
@@ -104,10 +106,12 @@ class Settings {
 	 * @param  String $name
 	 * @return mixed
 	 */
-	public function get($name){
-		if($this->has($name)) {
+	public function get($name)
+	{
+		if ($this->has($name)) {
 			return $this->data->$name;
 		}
+
 		return null;
 	}
 
@@ -117,7 +121,8 @@ class Settings {
 	 * @param  string  $name
 	 * @return boolean
 	 */
-	public function has($name) {
+	public function has($name)
+	{
 		return isset($this->data->$name);
 	}
 

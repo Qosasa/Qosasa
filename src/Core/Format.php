@@ -4,7 +4,7 @@
 class Format {
 
     /**
-     * Parametre name
+     * Parameter name
      * 
      * @var string
      */

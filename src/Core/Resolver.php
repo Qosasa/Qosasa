@@ -56,24 +56,27 @@ class Resolver {
 	{
 		$snippetName = $packageName = null;
 
-		if($this->aliases != null && isset($this->aliases->{$name})) {
+		if ($this->aliases != null && isset($this->aliases->{$name})) {
 			$name = $this->aliases->{$name};
 		}
 
 		$name = explode('.', $name);
-		if(count($name) == 1) {
+		if (count($name) === 1) {
 			$snippetName = $name[0];
-			if(empty($this->snippets) || ! isset($this->snippets[$snippetName])) {
+			if (empty($this->snippets) || ! isset($this->snippets[$snippetName])) {
 				throw new ResolverException("Cannot find the snippet '{$snippetName}'");
 			}
-			if(count($this->snippets[$snippetName]) > 1) {
+			if (count($this->snippets[$snippetName]) > 1) {
 				throw new ResolverException("Conflict: the snippet '{$snippetName}' exists in multiple packages. Please specify the package !");
 			}
 			$packageName = reset($this->snippets[$snippetName]);
-		} else if(count($name) == 2) {
+		} else if (count($name) === 2) {
 			$snippetName = $name[1];
 			$packageName = $name[0];
-			if(empty($this->snippets) || ! isset($this->snippets[$snippetName]) || ! in_array($packageName, $this->snippets[$snippetName])) {
+			if (empty($this->snippets) 
+				|| ! isset($this->snippets[$snippetName]) 
+				|| ! in_array($packageName, $this->snippets[$snippetName])
+			) {
 				throw new ResolverException("Cannot find the snippet '{$snippetName}' on the package '{$packageName}'");
 			}
 		} else {
@@ -97,10 +100,10 @@ class Resolver {
 		$contents = $this->fs->listContents('', true);
 
 		foreach ($contents as $item) {
-			if($item['type'] === 'dir' && substr_count($item['path'], DIRECTORY_SEPARATOR) == 1) {
+			if ($item['type'] === 'dir' && substr_count($item['path'], DIRECTORY_SEPARATOR) === 1) {
 				$packageName = $item['dirname'];
 				$snippetName = $item['basename'];
-				if(! array_key_exists($snippetName, $this->snippets)) {
+				if (! array_key_exists($snippetName, $this->snippets)) {
 					$this->snippets[$snippetName] = [];
 				}
 				$this->snippets[$snippetName][] = $packageName;
